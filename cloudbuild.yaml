@@ -1,16 +1,16 @@
 steps:
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: "bash"
-    args: ["-c", "docker pull gcr.io/$gcr/tom:$latest || exit 0"]
+    args: ["-c", "docker pull gcr.io/$gcr/tom || exit 0"]
 
   - name: gcr.io/cloud-builders/docker
     args:
       [
         "build",
         "-t",
-        "gcr.io/$gcr/tom:$latest",
+        "gcr.io/$gcr/tom",
         "-t",
-        "gcr.io/$gcr/tom:latest",
+        "gcr.io/$gcr/tom",
         ".",
       ]
 
@@ -26,4 +26,4 @@ steps:
       - "CLOUDSDK_COMPUTE_ZONE=us-east-1"
       - "CLOUDSDK_CONTAINER_CLUSTER=gcrtom"
 
-images: ["gcr.io/$gcr/tom:$latest", "gcr.io/$gcr/tom:latest"]
+images: ["gcr.io/$gcr/tom:$latest", "gcr.io/$gcr/tom"]
