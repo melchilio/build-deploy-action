@@ -1,0 +1,29 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    entrypoint: "bash"
+    args: ["-c", "docker pull gcr.io/$gcr/tom:$latest || exit 0"]
+
+  - name: gcr.io/cloud-builders/docker
+    args:
+      [
+        "build",
+        "-t",
+        "gcr.io/$gcr/tom:$latest",
+        "-t",
+        "gcr.io/$gcr/tom:latest",
+        ".",
+      ]
+
+  - name: "gcr.io/cloud-builders/kubectl"
+    args: ["apply", "-f", "k8s/"]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=us-east-1"
+      - "CLOUDSDK_CONTAINER_CLUSTER=gcrtom"
+
+  - name: "gcr.io/cloud-builders/kubectl"
+    args: ["set", "image", "deployment", "tom", "tom=gcr.io/$gcr/tom:$latest"]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=us-east-1"
+      - "CLOUDSDK_CONTAINER_CLUSTER=gcrtom"
+
+images: ["gcr.io/$gcr/tom:$latest", "gcr.io/$gcr/tom:latest"]
