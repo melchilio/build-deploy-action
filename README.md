@@ -2,7 +2,7 @@
 
 This action deploys your newly built docker images to Kubernetes clusters through Platformer Console
 
-## Inputs
+### Inputs
 
 ### `domain`
 
