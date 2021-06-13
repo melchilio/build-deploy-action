@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: tom-service
+  labels:
+    app: tom
+spec:
+  selector:
+    app: tom
+  ports:
+  - port: 8080
+    nodePort: 31200
+    targetPort: 8080
+  type: LoadBalancer
